@@ -37,6 +37,8 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import * as z from "zod";
 import { toast } from "sonner";
+import { Card } from "@/components/ui/card";
+import { cn } from "@/lib/utils";
 
 type System = {
     id: number;
@@ -235,11 +237,16 @@ export default function LinkSystem() {
             cell: ({ row }) => {
                 const system = row.original;
                 return (
-                    <Badge
-                        variant={system.is_active ? "default" : "destructive"}
+                    <div
+                        className={cn(
+                            "rounded-full py-1 px-2 w-fit text-xs font-semibold",
+                            system.is_active
+                                ? "bg-green-100/80 text-green-600"
+                                : "bg-red-100/80 text-red-600",
+                        )}
                     >
                         {system.is_active ? "Active" : "Inactive"}
-                    </Badge>
+                    </div>
                 );
             },
         },
@@ -271,21 +278,23 @@ export default function LinkSystem() {
 
     return (
         <>
-            <DataTable
-                columns={columns}
-                data={data?.data ?? []}
-                page={page}
-                lastPage={data?.last_page ?? 1}
-                setPage={setPage}
-                search={search}
-                setSearch={setSearch}
-                button={
-                    <Button onClick={() => handleOpenSheet()}>
-                        <Plus />
-                        Add Link
-                    </Button>
-                }
-            />
+            <Card className="p-4">
+                <DataTable
+                    columns={columns}
+                    data={data?.data ?? []}
+                    page={page}
+                    lastPage={data?.last_page ?? 1}
+                    setPage={setPage}
+                    search={search}
+                    setSearch={setSearch}
+                    button={
+                        <Button onClick={() => handleOpenSheet()}>
+                            <Plus />
+                            Add Link
+                        </Button>
+                    }
+                />
+            </Card>
 
             <Sheet
                 open={openSheet}

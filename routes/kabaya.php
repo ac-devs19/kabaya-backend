@@ -13,6 +13,7 @@ Route::middleware(['auth:sanctum'])->group(function () {
   Route::post('/kabaya/mobile/login', [AuthController::class, 'login']);
   Route::get('/kabaya/mobile/logout', [AuthController::class, 'logout']);
   Route::post('/kabaya/mobile/lock', [AuthController::class, 'lock']);
+  Route::post('/kabaya/mobile/biometrics', [AuthController::class, 'biometrics']);
 
   Route::get('/kabaya/mobile/link-systems', [AppController::class, 'getLinkSystem']);
 });

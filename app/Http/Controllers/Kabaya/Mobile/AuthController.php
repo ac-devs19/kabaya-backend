@@ -66,7 +66,7 @@ class AuthController extends Controller
         );
 
         return response()->json([
-            'token' => $user->createToken($request->input('device_name'))->plainTextToken
+            'token' => $user->createToken($request->input('device_name'), ['*'], now()->addWeek())->plainTextToken
         ]);
     }
 
@@ -236,5 +236,14 @@ class AuthController extends Controller
             ->update([
                 'required_password' => true,
             ]);
+    }
+
+    public function biometrics(Request $request)
+    {
+        $session = UserSession::where('device_id', $request->input('device_id'))->first();
+
+        $session->update([
+            'is_biometric' => $request->is_biometric,
+        ]);
     }
 }
