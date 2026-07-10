@@ -246,4 +246,24 @@ class AuthController extends Controller
             'is_biometric' => $request->is_biometric,
         ]);
     }
+
+    public function changePassword(Request $request)
+    {
+        $user = $request->user();
+
+        $validated = $request->validate([
+            'current_password' => ['required'],
+            'password' => ['required', Password::default()],
+        ]);
+
+        if (!Hash::check($validated['current_password'], $user->password)) {
+            throw ValidationException::withMessages([
+                'current_password' => ['The current password is incorrect.'],
+            ]);
+        }
+
+        $user->update([
+            'password' => Hash::make($validated['password']),
+        ]);
+    }
 }

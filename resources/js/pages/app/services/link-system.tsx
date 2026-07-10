@@ -206,7 +206,7 @@ export default function LinkSystem() {
                     <img
                         src={`http://127.0.0.1:8000/storage/${system.icon}`}
                         alt={system.label}
-                        className="size-14"
+                        className="size-14 object-contain"
                     />
                 );
             },
